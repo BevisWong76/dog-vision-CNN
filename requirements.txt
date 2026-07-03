@@ -8,3 +8,6 @@ numpy
 matplotlib
 seaborn
 scikit-learn
+tf2onnx
+onnxruntime
+streamlit
