@@ -1,0 +1,11 @@
+tensorflow_datasets
+importlib_resources
+protobuf==3.20.3
+ipykernel
+ipywidgets
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+tf2onnx

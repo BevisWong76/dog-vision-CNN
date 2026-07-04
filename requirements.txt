@@ -1,13 +1,3 @@
-tensorflow_datasets
-importlib_resources
-protobuf==3.20.3
-ipywidgets
-tqdm
-pandas
 numpy
-matplotlib
-seaborn
-scikit-learn
-tf2onnx
 onnxruntime
 streamlit
