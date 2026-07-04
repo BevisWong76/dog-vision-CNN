@@ -32,7 +32,7 @@ Dog Vision CNN is a lightweight, end-to-end computer vision web application desi
   <img src="plots/evaluation/01_training_history_curves.png" width="90%">
 </p>
 
-* **High Classification Performance:** Achieved ~**93.5% validation accuracy** and reduced cross-entropy validation loss to **~0.18** across 120 breeds.
+* **High Classification Performance:** Achieved ~**93.8% validation accuracy** and reduced cross-entropy validation loss to **~0.18** across 120 breeds.
 * **Effective Two-Stage Fine-Tuning:** 
   * **Stage 1 (Feature Extraction, Epochs 1–8):** The frozen EfficientNetV2B3 backbone rapidly stabilized, reaching ~92% training accuracy without overfitting.
   * **Stage 2 (Fine-Tuning, Epochs 9–14):** Unfreezing top layers successfully eliminated the initial training/validation gap, converging training and validation metrics smoothly.

@@ -1,0 +1,22 @@
+services:
+  jupyter:
+    image: nvcr.io/nvidia/tensorflow:25.02-tf2-py3
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - TF_CPP_MIN_LOG_LEVEL=3
+      - TF_ENABLE_ONEDNN_OPTS=0
+      - TF_GPU_THREAD_MODE=gpu_private
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: >
+      bash -c "pip install --break-system-packages -r requirements.txt && 
+               jupyter notebook --ip=0.0.0.0 --allow-root --NotebookApp.token='' --NotebookApp.password='' --ServerApp.iopub_msg_rate_limit=10000.0"
