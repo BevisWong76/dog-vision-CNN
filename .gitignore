@@ -1,2 +1,4 @@
 data/
+.venv
 models/*.keras
+.ipynb_checkpoints

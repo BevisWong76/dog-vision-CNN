@@ -1,7 +1,7 @@
 # Dog Vision — Dog Breed Classification with EfficientNetV2 & ONNX
 
 ## Overview
-Dog Vision CNN is a lightweight, end-to-end computer vision web application designed to classify dog breeds from uploaded images in real time. Built on a fine-tuned EfficientNetV2B3 architecture trained on the Stanford Dogs dataset, the core model reaches high-accuracy predictions across 120 distinct breeds. To optimize performance for cloud deployment, the model was converted to the ONNX (Open Neural Network Exchange) runtime format, drastically reducing memory overhead and inference latency while serving predictions through a clean Streamlit user interface.
+Dog Vision CNN is a lightweight, end-to-end computer vision web application designed to classify dog breeds from uploaded images in real time. Built on a fine-tuned EfficientNetV2B3 architecture trained on the Stanford Dogs dataset, the core model reaches high-accuracy predictions across 120 distinct breeds. To optimize performance for cloud deployment, the model was converted to the ONNX (Open Neural Network Exchange) format for execution via ONNX Runtime, drastically reducing memory overhead and inference latency while serving predictions through a clean Streamlit user interface.
 
 
 > For in-depth details on Exploratory Data Analysis (EDA), Model Selection and Tuning, and Results, please refer to the [Full Technical Report](dog_vision_report.md).
@@ -49,11 +49,11 @@ Dog Vision CNN is a lightweight, end-to-end computer vision web application desi
 ## Tech Stack
 
 * **Language:** Python `3.12.3`
-* **Data Processing & Analysis:** tensorflow_datasets, Pandas, NumPy
+* **Data Processing & Analysis:** TensorFlow Datasets, Pandas, NumPy
 * **Machine Learning:** TensorFlow, Scikit-Learn
 * **Visualization:** Matplotlib, Seaborn
 * **Model Persistence:** tf2onnx
-* **Web Framework:** Streamlit, onnxruntime
+* **Web Framework:** Streamlit, ONNX Runtime
 
 ---
 
@@ -91,86 +91,54 @@ git clone https://github.com/BevisWong76/dog-vision-CNN.git
 cd dog-vision-CNN
 ```
 
-### Option 1: Using Docker (Recommended for Notebook & Training)
+### Option 1: Docker Compose (Recommended for Windows & Linux with NVIDIA GPU)
 
-If you use Docker, you can run the entire environment (including TensorFlow and Jupyter Notebook) without installing dependencies locally.
+Ideal for environments with NVIDIA GPUs. It uses NVIDIA's official TensorFlow container (`nvcr.io/nvidia/tensorflow:25.02-tf2-py3`), ensuring zero CUDA driver setup on the host machine and instant reproducibility.
 
-1. **Build and start the container:**
+**Prerequisites:** [Docker Desktop / Engine](https://www.docker.com/) and [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
+
+1. Start the containerized Jupyter Lab server:
    ```bash
    docker compose up -d
    ```
-
-2. **Access the services:**
-   * **Streamlit App:** http://localhost:8501
-   * **Jupyter Notebook:** http://localhost:8888
+2. Access Jupyter Lab in your browser at `http://localhost:8888`.
 
 ---
 
-### Option 2: Using `uv` (Fast Local Setup)
+### Option 2: Native Virtual Environment (Recommended for macOS & CPU/Native Linux)
 
-[`uv`](https://github.com/astral-sh/uv) is an ultra-fast Rust-based Python package manager.
+Best for Apple Silicon Macs (M-series) to leverage native Metal/MPS acceleration, or Linux/Windows setups running lightweight CPU inference.
 
-1. **Install `uv`** (if not already installed):
+> Note: We recommend [`uv`](https://github.com/astral-sh/uv) for ultra-fast dependency management.
+
+1. **Create virtual environment with Python 3.12 via uv:**
    ```bash
    pip install uv
+   uv venv --python 3.12
    ```
 
-2. **Set up the virtual environment & dependencies:**
-
-   * **For Web App Only (Lightweight ~50MB):**
-     ```bash
-     uv venv
-     uv pip install -r requirements.txt
-     ```
-
-   * **For Full Development & Notebook Training (Includes TensorFlow):**
-     ```bash
-     uv venv
-     uv pip install -r requirements.txt -r requirements-dev.txt
-     ```
-
-3. **Activate the environment:**
+2. **Activate the environment:**
    * **Windows (PowerShell):** `.venv\Scripts\Activate.ps1`
    * **Windows (CMD):** `.venv\Scripts\activate.bat`
    * **macOS / Linux:** `source .venv/bin/activate`
 
----
+3. **Install dependencies:**
 
-### Option 3: Using Standard Python `venv`
-
-1. **Create and activate virtual environment:**
-   ```bash
-   python -m venv .venv
-
-   # Windows (PowerShell):
-   .venv\Scripts\Activate.ps1
-
-   # macOS / Linux:
-   source .venv/bin/activate
-   ```
-
-2. **Install dependencies:**
-
-   * **For Web App Only:**
+   * **For Web App Inference only (Lightweight ONNX Runtime):**
      ```bash
-     pip install -r requirements.txt
+     uv pip install -r requirements.txt
+     ```
+   * **For Model Training & Notebook Exploration (Full Dev Suite):**
+     ```bash
+     uv pip install -r requirements-dev.txt
      ```
 
-   * **For Full Development & Notebook Training:**
+4. **Launch Application / Notebook:**
+   * **Run Streamlit Web App:**
      ```bash
-     pip install -r requirements.txt -r requirements-dev.txt
+     streamlit run app.py
      ```
-
----
-
-### Running the Project Locally
-
-* **Launch the Streamlit Web App:**
-  ```bash
-  streamlit run app.py
-  ```
-
-* **Launch Jupyter Notebook (Requires Dev Dependencies):**
-  ```bash
-  jupyter notebook
-  ```
+   * **Launch Jupyter Lab:**
+     ```bash
+     jupyter lab dog_vision.ipynb
+     ```

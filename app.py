@@ -32,7 +32,7 @@ uploaded_file = st.file_uploader("Upload a dog photo...", type=["jpg", "jpeg", "
 if uploaded_file is not None:
     # Display Image
     image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, use_container_width=True)
+    st.image(image, width="stretch", caption="Uploaded Image")
     
     # Preprocess: EfficientNetV2 expects float32 images in [0, 255] range
     img_resized = image.resize((300, 300))

@@ -18,5 +18,5 @@ services:
               count: all
               capabilities: [gpu]
     command: >
-      bash -c "pip install --break-system-packages -r requirements.txt && 
-               jupyter notebook --ip=0.0.0.0 --allow-root --NotebookApp.token='' --NotebookApp.password='' --ServerApp.iopub_msg_rate_limit=10000.0"
+      bash -c "pip install -r requirements-dev.txt && 
+               jupyter lab --ip=0.0.0.0 --allow-root --ServerApp.token='' --ServerApp.password='' --ServerApp.iopub_msg_rate_limit=10000.0"
